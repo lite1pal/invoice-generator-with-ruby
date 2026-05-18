@@ -1,6 +1,8 @@
 <% cache @client do %>
     <h1><%= @client.name %></h1>
 
+    <%= image_tag @client.featured_image, style: "width: 300px; border-radius: 8px" if @client.featured_image.attached? %>
+
     <%= @client.description %>
 <% end %>
 
