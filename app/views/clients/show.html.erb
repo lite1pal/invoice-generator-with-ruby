@@ -1,4 +1,6 @@
-<h1><%= @client.name %></h1>
+<% cache @client do %>
+    <h1><%= @client.name %></h1>
+<% end %>
 
 <%= link_to "Back", clients_path %>
 <%= link_to "Edit", edit_client_path(@client) if authenticated? %>
