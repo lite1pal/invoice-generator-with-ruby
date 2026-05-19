@@ -32,3 +32,6 @@ en:
   clients:
     index:
       title: "Clients"
+  invoices:
+    index:
+      title: "Invoices"

@@ -1,0 +1,8 @@
+<% cache @invoice do %>
+    <h1><%= @invoice.invoice_number %></h1>
+
+<% end %>
+
+<%= link_to "Back", invoices_path %>
+<%= link_to "Edit", edit_invoice_path(@invoice) if authenticated? %>
+<%= button_to "Delete", @invoice, method: :delete if authenticated? %>
