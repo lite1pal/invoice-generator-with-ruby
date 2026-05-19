@@ -25,11 +25,11 @@ class InvoicesController < ApplicationController
         pdf.text "Line items", size: 16, style: :bold
 
         @invoice.line_items.each do |item|
-          pdf.text "#{item.description} - #{item.quantity} x #{item.unit_price_cents} cents = #{item.total_cents} cents"
+          pdf.text "#{item.description} - #{item.quantity} x #{dollars(item.unit_price_cents)} = #{dollars(item.total_cents)}"
         end
 
         pdf.move_down 20
-        pdf.text "Subtotal: #{@invoice.subtotal_cents} cents", style: :bold
+        pdf.text "Subtotal: #{dollars(@invoice.subtotal_cents)}", style: :bold
 
         send_data pdf.render,
           filename: "invoice-#{@invoice.invoice_number}.pdf",
@@ -73,6 +73,10 @@ class InvoicesController < ApplicationController
     redirect_to invoices_path
   end
 
+  def dollars(cents)
+    format("$%.2f", cents.to_i / 100.0)
+  end
+
   private
     def set_invoice
       @invoice = Invoice.find(params[:id])
@@ -84,7 +88,7 @@ class InvoicesController < ApplicationController
         :id,
         :description,
         :quantity,
-        :unit_price_cents,
+        :unit_price,
         :_destroy
       ] ] } ])
     end
