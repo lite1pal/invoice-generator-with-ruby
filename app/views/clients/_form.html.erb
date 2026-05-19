@@ -14,12 +14,36 @@
     </div>
 
     <div>
+        <%= form.label :company %>
+        <%= form.text_field :company %>
+    </div>
+
+    <div>
+        <%= form.label :phone %>
+        <%= form.phone_field :phone %>
+    </div>
+    
+    <div>
+        <%= form.label :address %>
+        <%= form.text_field :address %>
+    </div>
+
+    <div>
+        <%= form.label :tax_id %>
+        <%= form.text_field :tax_id %>
+    </div>
+
+    <div>
         <%= form.label :description, style: "display: block" %>
         <%= form.rich_textarea :description %>
     </div>
 
     <div>
         <%= form.label :featured_image, style: "display: block" %>
+
+        <% if form.object.featured_image.attached? %>
+            <p>Current image <i><%= form.object.featured_image.filename %></i></p>
+        <% end %>
         <%= form.file_field :featured_image, accept: "image/*" %>
     </div>
 
