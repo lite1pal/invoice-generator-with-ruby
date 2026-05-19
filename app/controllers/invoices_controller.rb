@@ -12,9 +12,7 @@ class InvoicesController < ApplicationController
   def new
     @invoice = Invoice.new
 
-    3.times do
-      @invoice.line_items.build
-    end
+    @invoice.line_items.build
   end
 
   def create
@@ -23,11 +21,13 @@ class InvoicesController < ApplicationController
     if @invoice.save
       redirect_to @invoice
     else
+      @invoice.line_items.build if @invoice.line_items.empty?
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
+    @invoice.line_items.build if @invoice.line_items.empty?
   end
 
   def update
@@ -49,12 +49,13 @@ class InvoicesController < ApplicationController
     end
 
     def invoice_params
-      params.expect(invoice: [ :client_id, :invoice_number, :issue_date, :due_date, :status, :notes, line_items_attributes: [
+      params.expect(invoice: [ :client_id, :invoice_number, :issue_date, :due_date, :status, :notes,
+      { line_items_attributes: [ [
         :id,
         :description,
         :quantity,
         :unit_price_cents,
         :_destroy
-      ] ])
+      ] ] } ])
     end
 end

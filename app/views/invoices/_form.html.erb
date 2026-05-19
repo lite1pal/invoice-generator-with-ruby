@@ -26,15 +26,36 @@
 
     <div>
          <%= form.label :status %>
+         <br>
          <%= form.select :status, Invoice.statuses.keys.map { |s| [s.titleize, s]} %>
     </div>
 
     <div>
         <%= form.label :notes %>
+        <br>
         <%= form.text_area :notes %>
     </div>
 
     <hr>
+
+    <%= form.fields_for :line_items do |line_item_form| %>
+        <div class="mb-10">
+            <div>
+                <%= line_item_form.label :description %>
+                <%= line_item_form.text_field :description %>
+            </div>
+            <div>
+                <%= line_item_form.label :quantity %>
+                <%= line_item_form.number_field :quantity %>
+            </div>
+
+            <div>
+                <%= line_item_form.label :unit_price_cents %>
+                <%= line_item_form.number_field :unit_price_cents %>
+            </div>
+        </div>
+    
+    <% end %>
   
     <div>
         <%= form.submit %>

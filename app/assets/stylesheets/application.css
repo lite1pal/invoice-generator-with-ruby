@@ -22,7 +22,7 @@
     cursor: pointer;
  }
 
- input:not([type="submit"]) {
+ input:not([type="submit"]), textarea {
     width: 100%;
     padding-block: 4px;
     padding-inline: 12px;
@@ -34,7 +34,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 4px;
+    gap: 20px;
     margin-block: 20px;
  }
 
