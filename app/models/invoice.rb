@@ -4,6 +4,8 @@ class Invoice < ApplicationRecord
 
   accepts_nested_attributes_for :line_items, allow_destroy: true
 
+  before_validation :calculate_amounts
+
   enum :status, {
     draft: 0,
     sent: 1,
@@ -14,7 +16,16 @@ class Invoice < ApplicationRecord
   validates :invoice_number, presence: true, uniqueness: true
   validates :issue_date, :due_date, presence: true
 
-  def subtotal_cents
-      line_items.sum(&:total_cents)
+  private
+
+  TAX_RATE = 0.0
+
+  def calculate_amounts
+    self.subtotal_cents = line_items.reject(&:marked_for_destruction?).sum do |item|
+      item.quantity.to_i * item.unit_price_cents.to_i
+    end
+
+    self.tax_cents = (subtotal_cents * TAX_RATE).round
+    self.total_cents = subtotal_cents + tax_cents
   end
 end
