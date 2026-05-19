@@ -8,3 +8,36 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+ html {
+    padding: 20px;
+ }
+
+ button, input[type="submit"], .btn {
+    padding-block: 4px;
+    padding-inline: 12px;
+    border-radius: 8px;
+    border: 1px solid black;
+    color: black;
+    cursor: pointer;
+ }
+
+ input:not([type="submit"]) {
+    width: 100%;
+    padding-block: 4px;
+    padding-inline: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.3);
+ }
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 4px;
+    margin-block: 20px;
+ }
+
+ a {
+    color: blue;
+ }

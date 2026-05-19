@@ -15,7 +15,7 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(client_params)
-    
+
     if @client.save
       redirect_to @client
     else
@@ -45,6 +45,6 @@ class ClientsController < ApplicationController
     end
 
     def client_params
-      params.expect(client: [ :name, :description, :featured_image])
+      params.expect(client: [ :name, :description, :featured_image ])
     end
 end

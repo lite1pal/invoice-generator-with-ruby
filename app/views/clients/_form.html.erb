@@ -1,6 +1,6 @@
 <%= form_with model: client do |form| %>
     <% if form.object.errors.any? %>
-        <p class="error"><% form.object.errors.full_messages.first %></p>
+        <p class="error"><%= form.object.errors.full_messages.first %></p>
     <% end %>
 
     <div>
