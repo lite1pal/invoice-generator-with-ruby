@@ -49,6 +49,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
 
     if @invoice.save
+      @invoice.recalculate_amounts_from_persisted_line_items!
       redirect_to @invoice
     else
       @invoice.line_items.build if @invoice.line_items.empty?

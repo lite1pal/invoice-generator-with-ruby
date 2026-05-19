@@ -4,7 +4,6 @@ class LineItem < ApplicationRecord
   attr_accessor :unit_price
 
   before_validation :convert_unit_price_to_cents
-
   validates :description, presence: true
   validates :quantity, numericality: { only_integer: true, greater_than: 0 }
   validates :unit_price_cents, numericality: { only_integer: true, greater_than: 0 }
@@ -26,8 +25,7 @@ class LineItem < ApplicationRecord
 
     value = BigDecimal(@unit_price.to_s)
     self.unit_price_cents = (value * 100).round(0).to_i
+  rescue ArgumentError
+    self.unit_price_cents = nil
   end
-
-rescue ArgumentError
-  self.unit_price_cents = nil
 end

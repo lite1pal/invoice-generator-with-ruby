@@ -16,14 +16,18 @@ class Invoice < ApplicationRecord
 
   validates :issue_date, :due_date, presence: true
 
+  def recalculate_amounts_from_persisted_line_items!
+    subtotal = line_items.sum("quantity * unit_price_cents")
+    tax = (subtotal * TAX_RATE).round
+    update_columns(subtotal_cents: subtotal, tax_cents: tax, total_cents: subtotal + tax, updated_at: Time.current)
+  end
+
   private
 
   TAX_RATE = 0.0
 
   def calculate_amounts
-    self.subtotal_cents = line_items.reject(&:marked_for_destruction?).sum do |item|
-      item.quantity.to_i * item.unit_price_cents.to_i
-    end
+    self.subtotal_cents = line_items.reject(&:marked_for_destruction?).sum(&:total_cents)
 
     self.tax_cents = (subtotal_cents * TAX_RATE).round
     self.total_cents = subtotal_cents + tax_cents

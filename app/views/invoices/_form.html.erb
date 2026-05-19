@@ -35,7 +35,7 @@
       </div>
       <div>
         <%= line_item_form.label :quantity %>
-        <%= line_item_form.number_field :quantity %>
+        <%= line_item_form.number_field :quantity, default_value: 1 %>
       </div>
       <div>
         <%= line_item_form.label :unit_price, "Unit price (USD)" %>
