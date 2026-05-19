@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_18_182445) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_19_095156) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -62,6 +62,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_18_182445) do
     t.string "phone"
     t.string "tax_id"
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_clients_on_email", unique: true
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.datetime "created_at", null: false
+    t.date "due_date", null: false
+    t.string "invoice_number", null: false
+    t.date "issue_date", null: false
+    t.text "notes"
+    t.integer "status", default: 0, null: false
+    t.integer "subtotal_cents", default: 0, null: false
+    t.integer "tax_cents", default: 0, null: false
+    t.integer "total_cents", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_invoices_on_client_id"
+    t.index ["invoice_number"], name: "index_invoices_on_invoice_number", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -83,5 +100,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_18_182445) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "invoices", "clients"
   add_foreign_key "sessions", "users"
 end

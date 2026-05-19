@@ -28,10 +28,14 @@ class ClientsController < ApplicationController
 
   def update
     if @client.update(client_params)
-      redirect_to @client
+      redirect_to @client, notice: "Client was updated successfully"
     else
       render :edit, status: :unprocessable_entity
     end
+
+  rescue ActiveRecord::RecordNotUnique
+    @client.errors.add(:email, "has been taken")
+    render :edit, status: :unprocessable_entity
   end
 
   def destroy
@@ -45,6 +49,6 @@ class ClientsController < ApplicationController
     end
 
     def client_params
-      params.expect(client: [ :name, :description, :featured_image, :company, :tax_id, :address, :phone ])
+      params.expect(client: [ :name, :description, :featured_image, :company, :tax_id, :address, :phone, :email ])
     end
 end
