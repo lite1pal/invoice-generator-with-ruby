@@ -1,8 +1,9 @@
+<%= link_to "Invoices", invoices_path %>
 <% cache @invoice do %>
-    <h1><%= @invoice.invoice_number %></h1>
-
+  <h1><%= @invoice.invoice_number %></h1>
 <% end %>
-
-<%= link_to "Back", invoices_path %>
-<%= link_to "Edit", edit_invoice_path(@invoice) if authenticated? %>
+<div class="flex items-center gap-3">
+  <%= link_to "Edit", edit_invoice_path(@invoice), class: "btn btn-primary" if authenticated? %>
+  <%= link_to "Download PDF", invoice_path(@invoice, format: :pdf), class: "btn btn-primary" if authenticated? %>
+</div>
 <%= button_to "Delete", @invoice, method: :delete if authenticated? %>

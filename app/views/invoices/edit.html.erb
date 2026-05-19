@@ -1,5 +1,3 @@
+<%= link_to @invoice.invoice_number, invoice_path %>
 <h1>Edit <%= @invoice.invoice_number %></h1>
-
 <%= render "form", invoice: @invoice %>
-
-<%= link_to "Cancel", invoices_path %>

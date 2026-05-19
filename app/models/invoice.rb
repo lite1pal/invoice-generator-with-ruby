@@ -5,6 +5,7 @@ class Invoice < ApplicationRecord
   accepts_nested_attributes_for :line_items, allow_destroy: true
 
   before_validation :calculate_amounts
+  before_validation :assign_invoice_number, on: :create
 
   enum :status, {
     draft: 0,
@@ -13,7 +14,6 @@ class Invoice < ApplicationRecord
     overdue: 3
   }
 
-  validates :invoice_number, presence: true, uniqueness: true
   validates :issue_date, :due_date, presence: true
 
   private
@@ -27,5 +27,17 @@ class Invoice < ApplicationRecord
 
     self.tax_cents = (subtotal_cents * TAX_RATE).round
     self.total_cents = subtotal_cents + tax_cents
+  end
+
+  def assign_invoice_number
+    return if invoice_number.present?
+
+    self.invoice_number = self.class.next_invoice_number
+  end
+
+  def self.next_invoice_number
+    last_number = order(created_at: :desc).limit(1).pick(:invoice_number)
+    last_seq = last_number&.match(/(\d+)\z/)&.captures&.first.to_i
+    format("INV-%04d", last_seq + 1)
   end
 end

@@ -1,11 +1,11 @@
 <h1 class="text-5xl font-semibold my-5"><%= t ".title" %></h1>
-
-<%= link_to "New invoice", new_invoice_path if authenticated? %>
-
+<div class="flex w-full">
+  <%= link_to "New invoice", new_invoice_path, class: "ml-auto btn" if authenticated? %>
+</div>
 <div id="invoices">
-    <% @invoices.each do |invoice| %>
-        <div>
-            <%= link_to invoice.invoice_number, invoice_path(invoice.id) %>
-        </div>
-    <% end %>
+  <% @invoices.each do |invoice| %>
+    <div>
+      <%= link_to invoice.invoice_number, invoice_path(invoice.id) %>
+    </div>
+  <% end %>
 </div>

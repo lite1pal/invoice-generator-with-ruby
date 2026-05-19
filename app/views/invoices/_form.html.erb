@@ -1,64 +1,49 @@
-<%= form_with model: invoice do |form| %>
-    <% if form.object.errors.any? %>
-        <p class="error"><%= form.object.errors.full_messages.first %></p>
-    <% end %>
-
-    <div>
-        <%= form.label :client_id%>
-        <br>
-        <%= form.collection_select :client_id, Client.all, :id, :name%>
+<%= form_with model: invoice, class: "pt-7" do |form| %>
+  <% if form.object.errors.any? %>
+    <p class="error"><%= form.object.errors.full_messages.first %></p>
+  <% end %>
+  <div>
+    <%= form.label :client_id%>
+    <br>
+    <%= form.collection_select :client_id, Client.all, :id, :name%>
+  </div>
+  <div>
+    <%= form.label :issue_date %>
+    <%= form.date_field :issue_date %>
+  </div>
+  <div>
+    <%= form.label :due_date %>
+    <%= form.date_field :due_date %>
+  </div>
+  <div>
+    <%= form.label :status %>
+    <br>
+    <%= form.select :status, Invoice.statuses.keys.map { |s| [s.titleize, s]} %>
+  </div>
+  <div>
+    <%= form.label :notes %>
+    <br>
+    <%= form.text_area :notes %>
+  </div>
+  <hr>
+  <%= form.fields_for :line_items do |line_item_form| %>
+    <div class="mb-10">
+      <label>Line items</label>
+      <div>
+        <%= line_item_form.label :description %>
+        <%= line_item_form.text_field :description %>
+      </div>
+      <div>
+        <%= line_item_form.label :quantity %>
+        <%= line_item_form.number_field :quantity %>
+      </div>
+      <div>
+        <%= line_item_form.label :unit_price_cents %>
+        <%= line_item_form.number_field :unit_price_cents %>
+      </div>
     </div>
-
-    <div>
-        <%= form.label :invoice_number %>
-        <%= form.text_field :invoice_number %>
-    </div>
-
-    <div>
-        <%= form.label :issue_date %>
-        <%= form.date_field :issue_date %>
-    </div>
-
-    <div>
-        <%= form.label :due_date %>
-        <%= form.date_field :due_date %>
-    </div>
-
-    <div>
-         <%= form.label :status %>
-         <br>
-         <%= form.select :status, Invoice.statuses.keys.map { |s| [s.titleize, s]} %>
-    </div>
-
-    <div>
-        <%= form.label :notes %>
-        <br>
-        <%= form.text_area :notes %>
-    </div>
-
-    <hr>
-
-    <%= form.fields_for :line_items do |line_item_form| %>
-        <div class="mb-10">
-            <div>
-                <%= line_item_form.label :description %>
-                <%= line_item_form.text_field :description %>
-            </div>
-            <div>
-                <%= line_item_form.label :quantity %>
-                <%= line_item_form.number_field :quantity %>
-            </div>
-
-            <div>
-                <%= line_item_form.label :unit_price_cents %>
-                <%= line_item_form.number_field :unit_price_cents %>
-            </div>
-        </div>
-    
-    <% end %>
-  
-    <div>
-        <%= form.submit %>
-    </div>
-
+  <% end %>
+  <div>
+    <%= form.submit "Add invoice", class: "btn btn-primary" %>
+  </div>
 <% end %>

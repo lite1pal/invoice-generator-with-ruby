@@ -13,13 +13,27 @@
     padding: 20px;
  }
 
- button, input[type="submit"], .btn {
+.btn {
     padding-block: 4px;
     padding-inline: 12px;
     border-radius: 8px;
-    border: 1px solid black;
+    border: 1px solid rgba(0,0,0,0.3);
     color: black;
     cursor: pointer;
+
+    &:hover {
+      border: 1px solid rgba(0,0,0,0.8);
+    }
+ }
+ 
+ .btn-primary {
+   background: rgb(79 55 242);
+   color: white;
+   border: none;
+
+   &:hover {
+      border: none;
+    }
  }
 
  input:not([type="submit"]), textarea {
@@ -30,6 +44,11 @@
     border: 1px solid rgba(0,0,0,0.3);
  }
 
+h1 {
+   font-size: 48px;
+   font-weight: 700;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -39,7 +58,7 @@ form {
  }
 
  a {
-    color: blue;
+    color: rgb(79 55 242);
  }
 
  .error {

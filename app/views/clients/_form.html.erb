@@ -1,54 +1,43 @@
 <%= form_with model: client do |form| %>
-    <% if form.object.errors.any? %>
-        <p class="error"><%= form.object.errors.full_messages.first %></p>
+  <% if form.object.errors.any? %>
+    <p class="error"><%= form.object.errors.full_messages.first %></p>
+  <% end %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+  <div>
+    <%= form.label :company %>
+    <%= form.text_field :company %>
+  </div>
+  <div>
+    <%= form.label :phone %>
+    <%= form.phone_field :phone %>
+  </div>
+  <div>
+    <%= form.label :address %>
+    <%= form.text_field :address %>
+  </div>
+  <div>
+    <%= form.label :tax_id %>
+    <%= form.text_field :tax_id %>
+  </div>
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.rich_textarea :description %>
+  </div>
+  <div>
+    <%= form.label :featured_image, style: "display: block" %>
+    <% if form.object.featured_image.attached? %>
+      <p>Current image <i><%= form.object.featured_image.filename %></i></p>
     <% end %>
-
-    <div>
-        <%= form.label :name %>
-        <%= form.text_field :name %>
-    </div>
-
-    <div>
-        <%= form.label :email %>
-        <%= form.text_field :email %>
-    </div>
-
-    <div>
-        <%= form.label :company %>
-        <%= form.text_field :company %>
-    </div>
-
-    <div>
-        <%= form.label :phone %>
-        <%= form.phone_field :phone %>
-    </div>
-    
-    <div>
-        <%= form.label :address %>
-        <%= form.text_field :address %>
-    </div>
-
-    <div>
-        <%= form.label :tax_id %>
-        <%= form.text_field :tax_id %>
-    </div>
-
-    <div>
-        <%= form.label :description, style: "display: block" %>
-        <%= form.rich_textarea :description %>
-    </div>
-
-    <div>
-        <%= form.label :featured_image, style: "display: block" %>
-
-        <% if form.object.featured_image.attached? %>
-            <p>Current image <i><%= form.object.featured_image.filename %></i></p>
-        <% end %>
-        <%= form.file_field :featured_image, accept: "image/*" %>
-    </div>
-
-    <div>
-        <%= form.submit %>
-    </div>
-
+    <%= form.file_field :featured_image, accept: "image/*" %>
+  </div>
+  <div>
+    <%= form.submit "Add client", class: "btn btn-primary" %>
+  </div>
 <% end %>

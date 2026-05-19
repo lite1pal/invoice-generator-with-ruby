@@ -68,3 +68,5 @@ end
 gem "tailwindcss-rails", "~> 4.4"
 
 gem "ruby-lsp", "~> 0.26.9", group: :development
+
+gem "prawn"

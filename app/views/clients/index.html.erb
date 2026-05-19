@@ -1,11 +1,11 @@
 <h1 class="text-5xl font-semibold my-5"><%= t ".title" %></h1>
-
-<%= link_to "New client", new_client_path if authenticated? %>
-
+<div class="flex w-full">
+  <%= link_to "New client", new_client_path, class: "ml-auto btn" if authenticated? %>
+</div>
 <div id="clients">
-    <% @clients.each do |client| %>
-        <div>
-            <%= client.name.presence || "Unnamed client" %> <%= link_to client.email, client_path(client.id) %>
-        </div>
-    <% end %>
+  <% @clients.each do |client| %>
+    <div>
+      <%= client.name.presence || "Unnamed client" %> <%= link_to client.email, client_path(client.id) %>
+    </div>
+  <% end %>
 </div>
