@@ -21,6 +21,13 @@
     <%= form.select :status, Invoice.statuses.keys.map { |s| [s.titleize, s]} %>
   </div>
   <div>
+    <%= form.label :featured_image %>
+    <% if form.object.featured_image.attached? %>
+      <p>Current image: <i><%= form.object.featured_image.filename %></i></p>
+    <% end %>
+    <%= form.file_field :featured_image, accept: "image/*" %>
+  </div>
+  <div>
     <%= form.label :notes %>
     <br>
     <%= form.text_area :notes %>

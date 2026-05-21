@@ -16,6 +16,12 @@ class InvoicesController < ApplicationController
         pdf.text "Invoice #{@invoice.invoice_number}", size: 24, style: :bold
         pdf.move_down 20
 
+        if @invoice.featured_image.attached?
+          pdf.image StringIO.open(@invoice.featured_image.download()), width: 36
+        end
+
+        pdf.move_down 20
+
         pdf.text "Client: #{@invoice.client.name}"
         pdf.text "Issue date: #{@invoice.issue_date}"
         pdf.text "Due date: #{@invoice.due_date}"
@@ -84,7 +90,7 @@ class InvoicesController < ApplicationController
     end
 
     def invoice_params
-      params.expect(invoice: [ :client_id, :issue_date, :due_date, :status, :notes,
+      params.expect(invoice: [ :client_id, :issue_date, :due_date, :status, :featured_image, :notes,
       { line_items_attributes: [ [
         :id,
         :description,
